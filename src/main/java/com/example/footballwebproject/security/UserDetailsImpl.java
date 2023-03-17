@@ -1,4 +1,4 @@
 package com.example.footballwebproject.security;
 
-public class ergpoij {
+public class UserDetailsImpl {
 }
