@@ -1,8 +1,8 @@
 package com.example.footballwebproject.comment;
 
-public class CommentController {
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
+public class CommentController {
     private final CommentService commentService;
 }
-
-//hello worldg
