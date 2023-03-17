@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 ### 역할
 
@@ -24,3 +25,5 @@
 #### test : 테스트 코드 추가/수정
 #### release : 버전 릴리즈
 ex) build : 가나다라
+=======
+# football-web-project
