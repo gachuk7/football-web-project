@@ -1,6 +1,8 @@
 package com.example.footballwebproject.game;
 
 import com.example.footballwebproject.entity.Game;
+import com.example.footballwebproject.exception.ApiException;
+import com.example.footballwebproject.exception.ExceptionEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +23,7 @@ public class GameService {
     @Transactional(readOnly = true)
     public Game getGame(Long id){
         return gameRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("그게임없어요")
-
+                () -> new ApiException(ExceptionEnum.GAME_NOT_FOUND)
         );
     }
 
