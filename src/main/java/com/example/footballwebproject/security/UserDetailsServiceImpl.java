@@ -2,7 +2,7 @@ package com.example.footballwebproject.security;
 
 
 import com.example.footballwebproject.entity.User;
-import com.example.footballwebproject.user.dto.UserRepository;
+import com.example.footballwebproject.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,4 +1,4 @@
-package com.example.footballwebproject.user.dto;
+package com.example.footballwebproject.user;
 
 
 import com.example.footballwebproject.entity.User;

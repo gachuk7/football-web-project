@@ -32,8 +32,6 @@ public class UserController {
         return ResponseEntity.ok("회원가입 성공");
     }
 
-
-
     @GetMapping("/login")                           //로그인 화면
     public ModelAndView loginPage() {
         return new ModelAndView("login");
