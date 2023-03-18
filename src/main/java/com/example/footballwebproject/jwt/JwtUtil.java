@@ -21,8 +21,8 @@ import com.example.footballwebproject.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j  //log 관련
@@ -45,17 +46,17 @@ public class JwtUtil {
 
     private final UserDetailsServiceImpl userDetailsService;       //스프링 시큐리티
 
-
+    @Value("${jwt.secret.key}")
     private String secretKey;
     private Key key;
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
 
-//    @PostConstruct         //null인데 쓸라해서 에러나는듯??
-//    public void init() {
-//        byte[] bytes = Base64.getDecoder().decode(secretKey);
-//        key = Keys.hmacShaKeyFor(bytes);
-//    }
+    @PostConstruct         //null인데 쓸라해서 에러나는듯??
+    public void init() {
+        byte[] bytes = Base64.getDecoder().decode(secretKey);
+        key = Keys.hmacShaKeyFor(bytes);
+    }
 
     // header 토큰을 가져오기
     public String resolveToken(HttpServletRequest request) {
@@ -73,6 +74,7 @@ public class JwtUtil {
         return BEARER_PREFIX +
                 Jwts.builder()
                         .setSubject(username)
+                        .claim(AUTHORIZATION_KEY, "USER")
                         .setExpiration(new Date(date.getTime() + TOKEN_TIME))
                         .setIssuedAt(date)
                         .signWith(key, signatureAlgorithm)

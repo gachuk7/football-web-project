@@ -9,41 +9,32 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Comment extends Timestamped{
+public class Comment extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @Column(nullable = false)
-    String title;
-
-    @Column(nullable = false)
     String body;
 
     @ManyToOne
-    @JoinColumn(name="USER_ID", nullable = false)
+    @JoinColumn(name = "USER_ID", nullable = false)
     User user;
 
     @ManyToOne
-    @JoinColumn(name="GAME_ID", nullable = false)
+    @JoinColumn(name = "GAME_ID", nullable = false)
     Game game;
 
-    @Column(nullable = false)
-    private String username;
 
-    @Column(nullable = false)
-    private String comment;
-
-    public Comment(CommentRequestDto commentRequestDto, Game game,User user) {
-        this.comment = commentRequestDto.getComment();
+    public Comment(CommentRequestDto commentRequestDto, Game game, User user) {
+        this.body = commentRequestDto.getBody();
         this.game = game;
         this.user = user;
     }
 
 
-
     // update 구현
     public void update(CommentRequestDto commentRequestDto) {
-        this.comment = commentRequestDto.getComment();
+        this.body = commentRequestDto.getBody();
     }
 }
