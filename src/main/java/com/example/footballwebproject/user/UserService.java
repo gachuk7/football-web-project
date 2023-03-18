@@ -4,10 +4,8 @@ import com.example.footballwebproject.entity.User;
 import com.example.footballwebproject.jwt.JwtUtil;
 import com.example.footballwebproject.user.dto.LoginRequestDto;
 import com.example.footballwebproject.user.dto.SignupRequestDto;
-import com.example.footballwebproject.user.dto.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +23,7 @@ public class UserService {
     public void signup(SignupRequestDto signupRequestDto) {
         String username = signupRequestDto.getUsername();
         String password = signupRequestDto.getPassword();
-//        String email = signupRequestDto.getEmail();
+        // String email = signupRequestDto.getEmail();
 
         // 회원 중복 확인
         Optional<User> found = userRepository.findByUsername(username);    //
@@ -33,9 +31,8 @@ public class UserService {
             throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
         }
 
-//        User user = userRepository.findByUsername(username)                                       //위에 Optional<User>과 같은 코드
-//                .orElseThrow(() -> new IllegalArgumentException("중복된 사용자가 존재합니다."));
-
+        // User user = userRepository.findByUsername(username)   //위에 Optional<User>과 같은 코드
+        //           .orElseThrow(() -> new IllegalArgumentException("중복된 사용자가 존재합니다."));
 
         User user = new User(username, password);
         userRepository.save(user);
