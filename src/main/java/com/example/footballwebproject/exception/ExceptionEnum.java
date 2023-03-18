@@ -19,7 +19,7 @@ public enum ExceptionEnum {
     /* 403 FORBIDDEN : 권한 없음 */
     INVALID_TOKEN(FORBIDDEN, "유효하지 않은 토큰입니다."),
 
-    /* 추가 */
+    /* 404 NOT_FOUND : 정보 없음 */
     USER_NOT_FOUND(NOT_FOUND,"유저를 찾을 수 없습니다."),
     GAME_NOT_FOUND(NOT_FOUND, "선택한 경기를 찾을 수 없습니다."),
     COMMENT_NOT_FOUND(NOT_FOUND, "선택한 댓글을 찾을 수 없습니다."),

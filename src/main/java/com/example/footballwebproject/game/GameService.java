@@ -12,7 +12,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class GameService {
-
     private final GameRepository gameRepository;
 
     @Transactional(readOnly = true)
@@ -21,10 +20,12 @@ public class GameService {
     }
 
     @Transactional(readOnly = true)
-    public Game getGame(Long id){
-        return gameRepository.findById(id).orElseThrow(
+    public GameResponseDto getGame(Long id){
+        Game game = gameRepository.findById(id).orElseThrow(
                 () -> new ApiException(ExceptionEnum.GAME_NOT_FOUND)
         );
+
+        return new GameResponseDto(game);
     }
 
 
