@@ -6,6 +6,9 @@ import com.example.footballwebproject.comment.repository.CommentRepository;
 import com.example.footballwebproject.entity.Comment;
 import com.example.footballwebproject.entity.Game;
 import com.example.footballwebproject.entity.User;
+import com.example.footballwebproject.exception.ApiException;
+import com.example.footballwebproject.exception.ExceptionEnum;
+import com.example.footballwebproject.game.GameRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +23,7 @@ public class CommentService {
     @Transactional
     public CommentResponseDto addComment(Long gameId, CommentRequestDto commentRequestDto, User user) {
         Game game = gameRepository.findById(gameId).orElseThrow(
-                () -> new IllegalArgumentException("게임이 존재하지 않습니다.")
+                () -> new ApiException(ExceptionEnum.GAME_NOT_FOUND)
         );
 
         Comment comment = commentRepository.save(new Comment(commentRequestDto, game, user));
@@ -31,11 +34,11 @@ public class CommentService {
     @Transactional
     public String updateComment(Long commentId, CommentRequestDto commentRequestDto, User user) {
         Comment comment = commentRepository.findById(commentId).orElseThrow(
-                () -> new IllegalArgumentException("댓글이 존재하지 않습니다.")
+                () -> new ApiException(ExceptionEnum.COMMENT_NOT_FOUND)
         );
 
-        if (!comment.getUser().equals(user)) {
-           return "유효하지 않는 로그인 정보입니다.";
+        if (!comment.getUser().getId().equals(user.getId())) {
+            throw new ApiException(ExceptionEnum.INVALID_USER_UPDATE);
         }
         // 로그인 한 유저는 소문자유저 comment 유저는 데이터베이스 에 가져오는 칼럼을 가져오게 되면 서로 일치하면 수정 가능
         comment.update(commentRequestDto);
@@ -47,11 +50,11 @@ public class CommentService {
     @Transactional
     public String deleteComment(Long commentId, User user) {
         Comment comment = commentRepository.findById(commentId).orElseThrow(
-                () -> new IllegalArgumentException("댓글이 존재하지 않습니다.")
+                () -> new ApiException(ExceptionEnum.COMMENT_NOT_FOUND)
         );
 
-        if (!comment.getUser().equals(user)) {
-            return "유효하지 않는 로그인 정보입니다.";
+        if (!comment.getUser().getId().equals(user.getId())) {
+            throw new ApiException(ExceptionEnum.INVALID_USER_DELETE);
         }
 
         commentRepository.delete(comment);
