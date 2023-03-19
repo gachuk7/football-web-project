@@ -1,0 +1,18 @@
+jwt.secret.key: 7ZWt7ZW0OTntmZTsnbTtjIXtlZzqta3snYTrhIjrqLjshLjqs4TroZzrgpjslYTqsIDsnpDtm4zrpa3tlZzqsJzrsJzsnpDrpbzrp4zrk6TslrTqsIDsnpA=
+# 윗 부분은 공통 적용
+---
+spring:
+  config:
+    activate:
+      on-profile: "common-local" # local 환경일 때 적용
+
+logging.level:
+  org.apache.coyote.http11: debug # 콘솔에 http 요청을 로그로 보여줄 수 있는 설정
+---
+spring:
+  config:
+    activate:
+      on-profile: "common-dev" # dev 환경일 때 적용
+
+logging.level:
+  org.apache.coyote.http11: debug
