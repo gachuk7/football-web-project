@@ -42,10 +42,10 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public void login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
-        String username = loginRequestDto.getUsername();
-        String password = loginRequestDto.getPassword();
-        log.info("username={}",username);                        /////////////
+        public void login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
+            String username = loginRequestDto.getUsername();
+            String password = loginRequestDto.getPassword();
+            log.info("username={}",username);                        /////////////
 
         // 사용자 확인
         User user = userRepository.findByUsername(username).orElseThrow(
