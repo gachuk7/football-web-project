@@ -16,7 +16,7 @@ public class GameController {
 
     // 게임조회 - 전체
     @GetMapping
-    public List<Game> getGames(){
+    public List<GameResponseDto> getGames(){
         return gameService.getGames();
     }
 

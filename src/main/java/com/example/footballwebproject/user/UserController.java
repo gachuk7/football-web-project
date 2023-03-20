@@ -18,11 +18,13 @@ public class UserController {
 
     private final UserService userService;      //의존성 주입
 
+
     @PostMapping("/signup")                         //회원가입 기능
-    public ResponseEntity<String> signup(@RequestBody @Valid SignupRequestDto signupRequestDto) {
+    public ResponseEntity signup(@RequestBody @Valid SignupRequestDto signupRequestDto) {
         userService.signup(signupRequestDto);
-        return ResponseEntity.ok("회원가입 성공");
+        return ResponseEntity.ok("회원가입 성공성공");
     }
+
 
     @PostMapping("/login")                         //로그인 기능
     public ResponseEntity login(@RequestBody @Valid LoginRequestDto loginRequestDto, HttpServletResponse response) {
