@@ -18,27 +18,18 @@ public class UserController {
 
     private final UserService userService;      //의존성 주입
 
-
-    @GetMapping("/signup")                           //회원가입 화면
-    public ModelAndView signupPage() {
-        return new ModelAndView("signup");
-    }
-
-
     @ResponseBody
+    @CrossOrigin
     @PostMapping("/signup")                         //회원가입 기능
     public ResponseEntity<String> signup(@RequestBody @Valid SignupRequestDto signupRequestDto) {
         userService.signup(signupRequestDto);
         return ResponseEntity.ok("회원가입 성공");
     }
 
-    @GetMapping("/login")                           //로그인 화면
-    public ModelAndView loginPage() {
-        return new ModelAndView("login");
-    }
 
     @ResponseBody           //안붙으면 html로 보냄,
     @PostMapping("/login")                         //로그인 기능
+    @CrossOrigin
     public ResponseEntity login(@RequestBody @Valid LoginRequestDto loginRequestDto, HttpServletResponse response) {
         userService.login(loginRequestDto,response);
 //        return "redirect:/api/post";

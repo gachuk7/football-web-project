@@ -15,7 +15,7 @@ public class JasyptTest {
         StandardPBEStringEncryptor jasypt = new StandardPBEStringEncryptor();
         // 암호화에 사용될 패스워드 입력 - 해당 문자열이 빌드 시 환경변수로 들어감
         // run - edit configuration : -Djasypt.password='설정한 패스워드'
-        jasypt.setPassword("aa");
+        jasypt.setPassword("greoigjrfWIJEWF");
 
         // 알고리즘 바탕으로 암호화된 텍스트
         String encryptedText = jasypt.encrypt(plainText);

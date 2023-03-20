@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,6 +22,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 
 @Configuration
@@ -62,14 +65,14 @@ public class WebSecurityConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests().antMatchers("/api/user/**").permitAll()
-                .antMatchers("/index").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/games/").permitAll()
                 .anyRequest().authenticated()
+                .and().cors()
                 // JWT 인증/인가를 사용하기 위한 설정
                 .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
 
-//        http.formLogin().loginPage("/api/user/login-page").permitAll();
-        http.formLogin().permitAll();
+        http.formLogin().loginPage("/api/user/login").permitAll();
 
         http.exceptionHandling().accessDeniedPage("/api/user/forbidden");
 
@@ -82,8 +85,9 @@ public class WebSecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         // 사전에 약속된 출처를 명시
-        config.addAllowedOrigin("http://localhost:3000");
+        //        config.addAllowedOriginPattern("*");
         //config.addAllowedOrigin("http://charleybucket.s3-website.ap-northeast-2.amazonaws.com");
+        config.setAllowedOriginPatterns(Arrays.asList("*"));
 
         // 특정 헤더를 클라이언트 측에서 사용할 수 있게 지정
         // 만약 지정하지 않는다면, Authorization 헤더 내의 토큰 값을 사용할 수 없음
@@ -109,4 +113,20 @@ public class WebSecurityConfig {
 
         return source;
     }
+
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//
+//        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+//        configuration.setAllowedMethods(Arrays.asList("HEAD\",\"POST\",\"GET\",\"DELETE\",\"PATCH\""));
+//        configuration.setAllowedHeaders(Arrays.asList("*"));
+//        configuration.setAllowCredentials(true);
+//        configuration.addExposedHeader("Authorization");
+//        configuration.addExposedHeader(JwtUtil.AUTHORIZATION_HEADER);
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
 }
