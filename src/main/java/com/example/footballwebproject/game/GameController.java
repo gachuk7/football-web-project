@@ -16,13 +16,13 @@ public class GameController {
 
     // 게임조회 - 전체
     @GetMapping
-    public List<GameResponseDto> getGames(){
+    public GameListResponseDto getGames() {
         return gameService.getGames();
     }
 
-     //게임조회 - 상세
-    @GetMapping("/{gameid}")
-    public GameResponseDto getGame(@PathVariable Long id){
-        return gameService.getGame(id);
+    //게임조회 - 상세
+    @GetMapping("/{gameId}")
+    public SingleGameResponseDto getGame(@PathVariable Long gameId) {
+        return gameService.getGame(gameId);
     }
 }
