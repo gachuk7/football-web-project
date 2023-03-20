@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,11 +15,18 @@ import java.util.List;
 public class GameService {
     private final GameRepository gameRepository;
 
+    //게임 전체 조회
     @Transactional(readOnly = true)
-    public List<Game> getGames(){
-        return gameRepository.findAll();
+    public List<GameResponseDto> getGames() {
+        List<GameResponseDto> gameResponseDtoList = new ArrayList<>();
+        List<Game> gameList = gameRepository.findAll();
+        for (Game game : gameList){
+            gameResponseDtoList.add(new GameResponseDto(game));
+        }
+        return gameResponseDtoList;
     }
 
+    //게임 단건 조회
     @Transactional(readOnly = true)
     public GameResponseDto getGame(Long id){
         Game game = gameRepository.findById(id).orElseThrow(
