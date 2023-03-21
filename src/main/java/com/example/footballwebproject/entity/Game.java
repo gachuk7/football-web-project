@@ -25,4 +25,10 @@ public class Game {
 
     @Column(nullable = false)
     Integer scoreB;
+
+    @Column
+    String imageA;
+
+    @Column
+    String imageB;
 }
