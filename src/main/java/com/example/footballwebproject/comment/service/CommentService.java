@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CommentService {
-    private static final Long PARENT_COMMENT_PATH_LENGTH = 2L;
+    private static final Long PARENT_COMMENT_PATH_LENGTH = 1L;
     private final CommentRepository commentRepository;
     private final GameRepository gameRepository;
 
@@ -93,10 +93,8 @@ public class CommentService {
         );
 
         // 1계층 대댓글 요구 사항에 따른 제한조건 구현
-        // 경로 문자열 길이가 특정 길이 이상이면 throw
-        // "1/" 은 길이가 2이므로 부모댓글임
-        // "1/2/" 는 길이가 2 이상이므로 대댓글임
-        if (comment.getPath().length() > PARENT_COMMENT_PATH_LENGTH) {
+        // '/' delimiter 로 잘랐을 때 배열 크기가 1이면 parent 이므로 throw
+        if (comment.getPath().split("/").length > PARENT_COMMENT_PATH_LENGTH) {
             throw new ApiException(ExceptionEnum.NOT_COMMENT_REPLY);
         }
 

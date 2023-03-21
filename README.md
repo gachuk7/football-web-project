@@ -7,11 +7,13 @@
 
 ### 2. Branch 전략
  - Git Flow : feature > dev > hotfix > main
- 
-### 2. Commit 메시지 규칙
-#### feat : 새로운 기능 추가, 기존의 기능을 요구 사항에 맞추어 수정
+
+### 3. Convention 
+
+### 4. Commit 메시지 규칙
+#### feat : 새로운 기능 추가, 기존 기능을 요구 사항에 맞추어 수정
 ex) git commit -m "feat : 대댓글 CRUD 구현"
-#### fix : 기능에 대한 버그 수정
+#### fix : 버그 수정
 ex) git commit -m "fix : cors 관련 config 클래스 수정"
 #### build : 빌드 관련 수정
 #### chore : 패키지 매니저 수정, 그 외 기타 수정 

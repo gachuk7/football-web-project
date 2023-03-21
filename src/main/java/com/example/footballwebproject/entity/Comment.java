@@ -36,7 +36,10 @@ public class Comment extends Timestamped {
 
     @Column(nullable = false)
     String path;
-
+    // 1/
+    // 1/2/
+    // 3/
+    // 1/2/4/
     @Column(nullable = false)
     Long depth;     // 1 이면 댓글, 2 이상이면 대댓글
 
