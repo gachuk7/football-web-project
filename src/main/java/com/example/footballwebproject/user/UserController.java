@@ -22,11 +22,11 @@ public class UserController {
     @PostMapping("/signup")                         //회원가입 기능
     public ResponseEntity signup(@RequestBody @Valid SignupRequestDto signupRequestDto) {
         userService.signup(signupRequestDto);
-        return ResponseEntity.ok("회원가입 성공성공");
+        return ResponseEntity.ok("회원가입 성공");
     }
 
 
-    @PostMapping("/login")                         //로그인 기능
+    @PostMapping                        //로그인 기능
     public ResponseEntity login(@RequestBody @Valid LoginRequestDto loginRequestDto, HttpServletResponse response) {
         userService.login(loginRequestDto,response);
         return ResponseEntity.ok("로그인 성공");

@@ -19,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -66,14 +67,23 @@ public class WebSecurityConfig {
 
         http.authorizeRequests()
                 .antMatchers("/api/user/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/games/").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/games/**").permitAll()
+                .antMatchers("/api/user/logout").permitAll() // 로그아웃을 위해 추가
                 .anyRequest().authenticated()
                 .and().cors()
                 // JWT 인증/인가를 사용하기 위한 설정
-                .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+                .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class)
 
+                 //로그아웃
+                .logout()   //로그아웃 메서드
+                .logoutRequestMatcher(new AntPathRequestMatcher("/api/user/logout"))
+                .invalidateHttpSession(true)     //true로 설정하면 로그아웃 시 세션 정보 삭제
+                .deleteCookies("JSESSIONID") //쿠키 삭제
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    response.sendRedirect("/api/games/");
+                });
 
-        // http.formLogin().loginPage("/api/user/login").permitAll();
+//         http.formLogin().loginPage("/api/user/login").permitAll();
 
         http.exceptionHandling().accessDeniedPage("/api/user/forbidden");
 
