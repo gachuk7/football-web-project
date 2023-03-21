@@ -8,6 +8,7 @@ import com.example.footballwebproject.user.dto.LoginRequestDto;
 import com.example.footballwebproject.user.dto.SignupRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,23 +20,20 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
+    private final PasswordEncoder passwordEncoder;
     private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
     @Transactional
     public void signup(SignupRequestDto signupRequestDto) {
         String username = signupRequestDto.getUsername();
-        String password = signupRequestDto.getPassword();
+        String password = passwordEncoder.encode(signupRequestDto.getPassword());
         // String email = signupRequestDto.getEmail();
 
         // 회원 중복 확인
         Optional<User> found = userRepository.findByUsername(username);    //
-        if (found.isPresent()) {              //isPresent는 Optional객의 값이 NULL인지 아닌지 판단해준다.
+        if (found.isPresent()) {
             throw new ApiException(ExceptionEnum.DUPLICATED_USERNAME);
         }
-
-        // User user = userRepository.findByUsername(username)   //위에 Optional<User>과 같은 코드
-        //           .orElseThrow(() -> new IllegalArgumentException("중복된 사용자가 존재합니다."));
-
         User user = new User(username, password);
         userRepository.save(user);
 
@@ -45,7 +43,7 @@ public class UserService {
         public void login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
             String username = loginRequestDto.getUsername();
             String password = loginRequestDto.getPassword();
-            log.info("username={}",username);                        /////////////
+            log.info("username={}",username);
 
         // 사용자 확인
         User user = userRepository.findByUsername(username).orElseThrow(
@@ -53,9 +51,10 @@ public class UserService {
         );
 
         // 비밀번호 확인
-        if(!user.getPassword().equals(password)){
+        if(!passwordEncoder.matches(password,user.getPassword())){
            throw new ApiException(ExceptionEnum.NOT_SAME_PASSWORD);
-        }
+        }        // 비밀번호 확인
+
 
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername()));
     }
