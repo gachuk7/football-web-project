@@ -1,6 +1,7 @@
 package com.example.footballwebproject.game;
 
 import com.example.footballwebproject.comment.dto.CommentResponseDto;
+import com.example.footballwebproject.comment.dto.ReplyResponseDto;
 import com.example.footballwebproject.comment.repository.CommentRepository;
 import com.example.footballwebproject.entity.Comment;
 import com.example.footballwebproject.entity.Game;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class GameService {
+    private static final Long PARENT_COMMENT_DEPTH = 1L;
     private final GameRepository gameRepository;
     private final CommentRepository commentRepository;
 
@@ -27,16 +29,27 @@ public class GameService {
         return new GameListResponseDto(gameList.stream().map(GameResponseDto::new).toList());
     }
 
-    //게임 단건 조회
+    /**
+     * 게임 단건 조회
+     * 1. commnetList : 최상위 부모 댓글만 나옴
+     * 2. replyList : 최상위 부모 댓글을 제외한 대댓글이 나옴
+     */
     @Transactional(readOnly = true)
     public SingleGameResponseDto getGame(Long id) {
         Game game = gameRepository.findById(id).orElseThrow(
                 () -> new ApiException(ExceptionEnum.GAME_NOT_FOUND)
         );
+
         GameResponseDto gameResponseDto = new GameResponseDto(game);
-        List<Comment> commentList = commentRepository.findAllByGameIdOrderByCreatedAtDesc(id);
-        List<CommentResponseDto> commentResponseDtoList = commentList.stream()
-                .map(CommentResponseDto::new).toList();
+
+        List<Comment> commentList = commentRepository.findAllByGameIdAndDepthOrderByCreatedAtDesc(id, PARENT_COMMENT_DEPTH);
+        List<CommentResponseDto> commentResponseDtoList =
+                commentList.stream()
+                .map(x -> {
+                    List<Comment> replyList = commentRepository.findAllByPathStartsWithAndDepthGreaterThan(x.getPath(), PARENT_COMMENT_DEPTH);
+                    return new CommentResponseDto(x, replyList.stream().map(ReplyResponseDto::new).toList());
+                }).toList();
+
         return new SingleGameResponseDto(gameResponseDto, commentResponseDtoList);
     }
 }

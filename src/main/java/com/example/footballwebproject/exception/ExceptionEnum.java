@@ -15,6 +15,7 @@ public enum ExceptionEnum {
     NOT_PROPER_PASSWORD(BAD_REQUEST, "비밀번호는 8자 이상 15자 이하의 알파벳 소문자와 숫자로 구성되어야 합니다."),
     NOT_SAME_PASSWORD(BAD_REQUEST, "비밀번호 확인과 일치하지 않습니다."),
     DUPLICATED_USERNAME(BAD_REQUEST, "중복된 아이디입니다."),
+    NOT_COMMENT_REPLY(BAD_REQUEST, "대댓글에는 대댓글을 작성할 수 없습니다."),
 
     /* 403 FORBIDDEN : 권한 없음 */
     INVALID_TOKEN(FORBIDDEN, "유효하지 않은 토큰입니다."),
