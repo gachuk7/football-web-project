@@ -1,9 +1,13 @@
 ## 기술적 의사결정
 
 ### 1. 배포환경
-
+ 
+ - AWS EC2 
+ 
 ### 2. CI/CD
-
+ 
+ - Github Actions
+ - AWS CodeDeploy
 
 ## Ground Rule
 
