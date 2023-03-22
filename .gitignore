@@ -36,4 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 
-**/resources/application.properties
+**/resources/application.yml
+**/resources/application-common.yml
+**/resources/application-db.yml

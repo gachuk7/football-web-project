@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.7.9'
+    id 'org.springframework.boot' version '2.7.5'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
@@ -19,16 +19,36 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+
+    // 유효성 검증
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // json
+    implementation group: 'org.json', name: 'json', version: '20230227'
+
+    // jwt
+    // implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+    compileOnly 'io.jsonwebtoken:jjwt-api:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+
+    // mockito
+    testImplementation 'org.mockito:mockito-core:4.8.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:4.8.0'
+
+    // jasypt : application 설정파일 암호화
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
 }
 
 tasks.named('test') {
