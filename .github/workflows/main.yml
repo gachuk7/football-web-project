@@ -1,0 +1,36 @@
+# Repository의 Actions 탭에 나타날 Workflow 이름
+name: gotchukCI
+
+# on: Workflow를 실행시키기 위한 Event 목록
+# 하단 코드에 따라 develop 브랜치에 Push 또는 Pull Request 이벤트가 발생한 경우에 Workflow가 실행
+# 브랜치 구분 없이 이벤트를 지정하고 싶을 경우에는 아래와 같이 작성 가능
+# on: [push, pull_request]
+on: 
+  push:
+    branches: [dev]
+  pull_request:
+    branches: [dev]
+
+  # 해당 옵션을 통해 사용자가 직접 Actions 탭에서 Workflow를 실행 가능
+  workflow_dispatch:
+
+# 해당 Workflow의 하나 이상의 Job 목록입니다.
+jobs:
+  # Job 이름 - 'deploy'
+  deploy:
+    # Runner 실행 환경 정의
+    runs-on: ubuntu-latest
+
+    # 'deploy' Job 내의 step 목록
+    steps:
+      # uses 키워드 : 해당 레포지토리로 check-out하여 레포지토리에 접근할 수 있는 Action을 불러왔습니다.
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # 여기서 실행되는 커맨드에 대한 설명으로, Workflow에 표시됩니다.
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # 이렇게 하나의 커맨드가 아닌 여러 커맨드도 실행 가능합니다.
+      - name: Run a multi-line script
+        run: 
