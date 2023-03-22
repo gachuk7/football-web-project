@@ -1,8 +1,5 @@
 package com.example.footballwebproject.game;
 
-import com.example.footballwebproject.entity.Game;
-import com.example.footballwebproject.exception.ApiException;
-import com.example.footballwebproject.exception.ExceptionEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

@@ -3,8 +3,6 @@ package com.example.footballwebproject.game;
 import com.example.footballwebproject.entity.Game;
 import lombok.Getter;
 
-import java.util.List;
-
 @Getter
 public class GameResponseDto {
     private Long gameId;
