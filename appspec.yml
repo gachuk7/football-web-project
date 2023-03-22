@@ -6,13 +6,6 @@ files:
     destination: /home/ubuntu/app
     overwrite: yes
 
-permissions:
-  - object: /home/ubuntu/app
-    pattern: "/*"
-    owner: ubuntu
-    group: ubuntu
-    mode: 755
-
 hooks:
   # 배포 시 실행될 파일, deploy.sh는 배포파일을 우분투 내에 실행시켜줌
   AfterInstall:
