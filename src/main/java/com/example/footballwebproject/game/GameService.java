@@ -52,4 +52,10 @@ public class GameService {
 
         return new SingleGameResponseDto(gameResponseDto, commentResponseDtoList);
     }
+
+    @Transactional
+    public GameResponseDto createGame(GameRequestDto requestDto){
+        Game game = gameRepository.save(new Game(requestDto));
+        return new GameResponseDto(game);
+    }
 }

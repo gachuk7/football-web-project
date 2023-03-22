@@ -12,6 +12,8 @@ public class GameResponseDto {
     private String teamB;
     private int scoreA;
     private int scoreB;
+    private String imageA;
+    private String imageB;
 
     public GameResponseDto(Game game){
         this.gameId = game.getId();
@@ -19,6 +21,8 @@ public class GameResponseDto {
         this.teamB = game.getTeamB();
         this.scoreA = game.getScoreA();
         this.scoreB = game.getScoreB();
+        this.imageA = game.getImageA();
+        this.imageB = game.getImageB();
     }
 
 
