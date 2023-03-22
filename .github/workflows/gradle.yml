@@ -53,7 +53,7 @@ jobs:
           cd ./src/main/resources
           touch ./application.properties
           echo ">> copy application.properties"
-          echo "${{ secrets.APPLICATION_PROPERTIES }}\n" >> ./application.properties
+          echo "${{ secrets.APPLICATION_PROPERTIES }}" >> ./application.properties
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
