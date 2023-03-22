@@ -139,12 +139,19 @@ public class CommentService {
      * 쿼리 확인 결과 비효율적임
      */
     @Transactional
-    public String deleteReply(Long replyId, User user) {
+    public String deleteReply(Long replyId, Long commentId, User user) {
         Comment reply = commentRepository.findById(replyId).orElseThrow(
+                () -> new ApiException(ExceptionEnum.COMMENT_NOT_FOUND)
+        );
+        Comment comment = commentRepository.findById(commentId).orElseThrow(
                 () -> new ApiException(ExceptionEnum.COMMENT_NOT_FOUND)
         );
 
         if (!reply.getUser().getId().equals(user.getId())) {
+            throw new ApiException(ExceptionEnum.INVALID_USER_DELETE);
+        }
+
+        if (!comment.getUser().getId().equals(user.getId())) {
             throw new ApiException(ExceptionEnum.INVALID_USER_DELETE);
         }
 

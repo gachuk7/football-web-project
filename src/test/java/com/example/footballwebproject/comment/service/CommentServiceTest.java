@@ -10,4 +10,10 @@ class CommentServiceTest {
         String[] str = test.split("/");
         Assertions.assertThat(str.length).isEqualTo(5);
     }
+
+    @Test
+    void subCommnetTest(){
+
+    }
+
 }

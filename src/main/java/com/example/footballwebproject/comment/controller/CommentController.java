@@ -83,8 +83,8 @@ public class CommentController {
      * 대댓글 삭제
      */
     @DeleteMapping("/api/games/{gameId}/comments/{commentId}/reply/{replyId}")
-    public ResponseEntity<String> deleteReply(@PathVariable Long replyId,
+    public ResponseEntity<String> deleteReply(@PathVariable Long replyId, @PathVariable Long commentId,
                                               @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return ResponseEntity.ok().body(commentService.deleteReply(replyId, userDetails.getUser()));
+        return ResponseEntity.ok().body(commentService.deleteReply(replyId, commentId, userDetails.getUser()));
     }
 }
