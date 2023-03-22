@@ -16,7 +16,8 @@ on:
   
 env:
   S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
-  
+  JASYPT_PASSWORD: ${{ secrets.JASYPT_SECRET_KEY }}
+
 # 해당 Workflow의 하나 이상의 Job 목록입니다.
 jobs:
   # Job 이름 - 'deploy'
@@ -51,12 +52,9 @@ jobs:
           mkdir -p ./src/main/resources
           cd ./src/main/resources
           touch ./application.properties
-          touch ./application.yml
-          touch ./application-common.yml
-          touch ./application-db.yml
           echo ">> copy application.properties"
-          echo "${{ secrets.PROPERTIES }}" >> ./application.properties
-    
+          echo "${{ secrets.APPLICATION_PROPERTIES }}\n" >> ./application.properties
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
         shell: bash
