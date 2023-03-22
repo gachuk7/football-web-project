@@ -91,6 +91,3 @@ jobs:
           --file-exists-behavior OVERWRITE
           --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$GITHUB_SHA.zip
           --region ap-northeast-2
-          
-      - name: Check main.yaml contents
-        run: cat .github/workflows/main.yml
