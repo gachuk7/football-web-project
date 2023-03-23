@@ -126,9 +126,12 @@ public class CommentService {
                 () -> new ApiException(ExceptionEnum.COMMENT_NOT_FOUND)
         );
 
+
+        // 대댓글의 유저 아이디와 요청자의 유저 아이디가 다르면 수정 불가능
         if (!reply.getUser().getId().equals(user.getId())) {
             throw new ApiException(ExceptionEnum.INVALID_USER_UPDATE);
         }
+
 
         reply.update(commentRequestDto);
         return new ReplyResponseDto(reply);
@@ -143,22 +146,27 @@ public class CommentService {
         Comment reply = commentRepository.findById(replyId).orElseThrow(
                 () -> new ApiException(ExceptionEnum.COMMENT_NOT_FOUND)
         );
+
         Comment comment = commentRepository.findById(commentId).orElseThrow(
                 () -> new ApiException(ExceptionEnum.COMMENT_NOT_FOUND)
         );
 
-        if (!reply.getUser().getId().equals(user.getId())) {
-            throw new ApiException(ExceptionEnum.INVALID_USER_DELETE);
+        Long replyUserId = reply.getUser().getId();
+        Long commentUserId = comment.getUser().getId();
+        Long requestUserId = user.getId();
+
+        // 비즈니스 로직 : 댓글 작성자는 자기 댓글에 달린 대댓글을 삭제할 수 있다.
+        if (!replyUserId.equals(requestUserId)) {
+            if (!commentUserId.equals(requestUserId)) {
+                // 제 3자의 경우 삭제 X
+                throw new ApiException(ExceptionEnum.INVALID_USER_DELETE);
+            }
         }
 
-        if (!comment.getUser().getId().equals(user.getId())) {
-            throw new ApiException(ExceptionEnum.INVALID_USER_DELETE);
-        }
-
-        // 경로 바탕으로 자식 댓글을 찾아서 모두 삭제
         String path = reply.getPath();
         commentRepository.deleteAllByPathStartsWith(path);
         return "대댓글 삭제 성공";
+
     }
 }
 
