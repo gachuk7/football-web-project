@@ -32,4 +32,5 @@ if [ ! -z $CURRENT_PID ]; then
   kill -15 $CURRENT_PID
 fi
 
+cp $PROJECT_ROOT/build/libs/*.jar $JAR_FILE
 nohup java -jar -Dserver.port=$TARGET_PORT $JAR_FILE > $APP_LOG 2> $ERROR_LOG &
