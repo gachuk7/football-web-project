@@ -8,6 +8,7 @@
  
  - Github Actions
  - AWS CodeDeploy
+ - NGINX (추가)
 
 ## Architecture
 
