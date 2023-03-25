@@ -61,12 +61,12 @@ public class GameDataRunner implements ApplicationRunner {
         requestDto6.setImageB("https://secure.cache.images.core.optasports.com/soccer/teams/75x75/uuid_1yghbv1c71b37eenutbwnvvq.png");
 
 
-        gameService.createGame(requestDto1);
-        gameService.createGame(requestDto2);
-        gameService.createGame(requestDto3);
-        gameService.createGame(requestDto4);
-        gameService.createGame(requestDto5);
-        gameService.createGame(requestDto6);
+//        gameService.createGame(requestDto1);
+//        gameService.createGame(requestDto2);
+//        gameService.createGame(requestDto3);
+//        gameService.createGame(requestDto4);
+//        gameService.createGame(requestDto5);
+//        gameService.createGame(requestDto6);
     }
 
 }
