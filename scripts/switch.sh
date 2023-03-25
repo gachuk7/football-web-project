@@ -21,4 +21,4 @@ echo "set \$service_url http://127.0.0.1:${TARGET_PORT};" | tee /home/ubuntu/ser
 echo "> Now Nginx proxies to ${TARGET_PORT}." >> $DEPLOY_LOG
 
 # nginx reload
-sudo service nginx -s reload
+sudo service nginx reload
