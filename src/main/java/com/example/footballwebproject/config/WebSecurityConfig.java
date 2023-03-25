@@ -66,7 +66,7 @@ public class WebSecurityConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests()
-                .antMatchers("/").permitAll()
+                .antMatchers("/healthcheck").permitAll()
                 .antMatchers("/api/user/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/games/**").permitAll()
                 .antMatchers("/api/user/logout").permitAll() // 로그아웃을 위해 추가
