@@ -20,7 +20,7 @@ echo "> Health check of WAS at 'http://127.0.0.1:${TARGET_PORT}' ..."
 for RETRY_COUNT in $(seq 10);
 do
     echo "> #${RETRY_COUNT} trying..."
-    RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}"  http://127.0.0.1:${TARGET_PORT}/api/games)
+    RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}"  http://127.0.0.1:${TARGET_PORT}/healthcheck)
     echo ${RESPONSE_CODE}
     if [ ${RESPONSE_CODE} -eq 200 ]; then
         echo "> New WAS successfully running"
