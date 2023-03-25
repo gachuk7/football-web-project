@@ -21,7 +21,7 @@ for RETRY_COUNT in $(seq 10);
 do
     echo "> #${RETRY_COUNT} trying..."
     RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}"  http://127.0.0.1:${TARGET_PORT}/healthcheck)
-    echo RESPONSE_CODE
+    echo ${RESPONSE_CODE}
     if [ ${RESPONSE_CODE} -eq 200 ]; then
         echo "> New WAS successfully running"
         exit 0
