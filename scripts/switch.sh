@@ -4,9 +4,7 @@ PROJECT_ROOT="/home/ubuntu/app"
 
 DEPLOY_LOG="$PROJECT_ROOT/deploy.log"
 
-# CURRENT_PORT : 현재 구동중인 애플리케이션의 포트
 CURRENT_PORT=$(cat /home/ubuntu/service_url.inc | grep -Po '[0-9]+' | tail -1)
-# TARGET_PORT : 변경할 포트
 TARGET_PORT=0
 
 if [ $CURRENT_PORT -eq 8081 ]; then
