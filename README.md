@@ -8,7 +8,7 @@
  
  - Github Actions
  - AWS CodeDeploy
- - NGINX (추가) : port 8081, 8082 스위칭
+ - NGINX (추가) : port 8081, 8082 스위칭 !
 
 ## Architecture
 
